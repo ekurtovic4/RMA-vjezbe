@@ -1,5 +1,6 @@
 package ba.unsa.etf.rma.cineaste
 
+import android.app.SearchManager
 import android.content.ActivityNotFoundException
 import android.content.Context
 import android.content.Intent
@@ -8,6 +9,7 @@ import android.os.Bundle
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 class MovieDetailActivity : AppCompatActivity() {
     private lateinit var movie: Movie
@@ -17,6 +19,7 @@ class MovieDetailActivity : AppCompatActivity() {
     private lateinit var genre : TextView
     private lateinit var website : TextView
     private lateinit var poster : ImageView
+    private lateinit var shareBtn : FloatingActionButton
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -27,6 +30,8 @@ class MovieDetailActivity : AppCompatActivity() {
         genre = findViewById(R.id.movie_genre)
         poster = findViewById(R.id.movie_poster)
         website = findViewById(R.id.movie_website)
+        shareBtn = findViewById(R.id.shareButton)
+
         val extras = intent.extras
         if (extras != null) {
             movie = getMovieByTitle(extras.getString("movie_title",""))
@@ -36,6 +41,12 @@ class MovieDetailActivity : AppCompatActivity() {
         }
         website.setOnClickListener{
             showWebsite()
+        }
+        title.setOnClickListener {
+            showTrailer()
+        }
+        shareBtn.setOnClickListener{
+            sendText()
         }
     }
     private fun populateDetails() {
@@ -63,7 +74,29 @@ class MovieDetailActivity : AppCompatActivity() {
         try {
             startActivity(webIntent)
         } catch (e: ActivityNotFoundException) {
-            // Definisati naredbe ako ne postoji aplikacija za navedenu akciju
+            println("Ne postoji aplikacija za navedenu akciju")
+        }
+    }
+    private fun showTrailer(){
+        val webIntent = Intent(Intent.ACTION_WEB_SEARCH).apply{
+            putExtra(SearchManager.QUERY, title.text.toString() + " trailer")
+        }
+        try{
+            startActivity(webIntent)
+        } catch (e: ActivityNotFoundException) {
+            println("Ne postoji aplikacija za navedenu akciju")
+        }
+    }
+    private fun sendText(){
+        val txtIntent = Intent(Intent.ACTION_SEND).apply{
+            putExtra(Intent.EXTRA_TEXT, overview.text.toString())
+            type = "text/plain"
+        }
+        val shareIntent = Intent.createChooser(txtIntent, null)
+        try{
+            startActivity(shareIntent)
+        } catch (e: ActivityNotFoundException) {
+            println("Ne postoji aplikacija za navedenu akciju")
         }
     }
 }
