@@ -1,15 +1,20 @@
 package ba.unsa.etf.rma.cineaste.activities
 
 import android.content.Intent
+import android.content.IntentFilter
+import android.net.ConnectivityManager
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.os.bundleOf
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import ba.unsa.etf.rma.cineaste.R
+import ba.unsa.etf.rma.cineaste.adapters_etc.MyBroadcastReceiver
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class MainActivity : AppCompatActivity() {
+    private val myBroadcastReceiver = MyBroadcastReceiver()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -26,5 +31,13 @@ class MainActivity : AppCompatActivity() {
                 navController.navigate(R.id.searchFragment,bundle)
             }
         }
+
+        val filter = IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION)
+        registerReceiver(myBroadcastReceiver, filter)
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        unregisterReceiver(myBroadcastReceiver)
     }
 }
