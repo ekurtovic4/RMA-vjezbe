@@ -6,5 +6,7 @@ data class Movie(
     val overview: String,
     val releaseDate: String,
     val homepage: String,
-    val genre: String
+    val genre: String,
+    val actors: List<String>,
+    val similarMovies: List<String>
 )

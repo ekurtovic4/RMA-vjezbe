@@ -9,10 +9,13 @@ import android.os.Bundle
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.ui.setupWithNavController
 import ba.unsa.etf.rma.cineaste.R
 import ba.unsa.etf.rma.cineaste.data.Movie
 import ba.unsa.etf.rma.cineaste.data.getFavoriteMovies
 import ba.unsa.etf.rma.cineaste.data.getRecentMovies
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 class MovieDetailActivity : AppCompatActivity() {
@@ -52,7 +55,13 @@ class MovieDetailActivity : AppCompatActivity() {
         shareBtn.setOnClickListener{
             sendText()
         }
+
+        val navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
+        val navController = navHostFragment.navController
+        val navView: BottomNavigationView = findViewById(R.id.bottomNavigation)
+        navView.setupWithNavController(navController)
     }
+
     private fun populateDetails() {
         title.text=movie.title
         releaseDate.text=movie.releaseDate
@@ -66,13 +75,15 @@ class MovieDetailActivity : AppCompatActivity() {
             .getIdentifier("picture1", "drawable", context.packageName)
         poster.setImageResource(id)
     }
+
     private fun getMovieByTitle(name:String): Movie {
         val movies: ArrayList<Movie> = arrayListOf()
         movies.addAll(getRecentMovies())
         movies.addAll(getFavoriteMovies())
         val movie= movies.find { movie -> name == movie.title }
-        return movie?: Movie(0,"Test","Test","Test","Test","Test")
+        return movie?: Movie(0,"Test","Test","Test","Test","Test", listOf("Test"), listOf("Test"))
     }
+
     private fun showWebsite(){
         val webIntent = Intent(Intent.ACTION_VIEW, Uri.parse(movie.homepage))
         try {
@@ -81,6 +92,7 @@ class MovieDetailActivity : AppCompatActivity() {
             println("Ne postoji aplikacija za navedenu akciju")
         }
     }
+
     private fun showTrailer(){
         val webIntent = Intent(Intent.ACTION_WEB_SEARCH).apply{
             putExtra(SearchManager.QUERY, title.text.toString() + " trailer")
@@ -91,6 +103,7 @@ class MovieDetailActivity : AppCompatActivity() {
             println("Ne postoji aplikacija za navedenu akciju")
         }
     }
+
     private fun sendText(){
         val txtIntent = Intent(Intent.ACTION_SEND).apply{
             putExtra(Intent.EXTRA_TEXT, overview.text.toString())
@@ -102,5 +115,13 @@ class MovieDetailActivity : AppCompatActivity() {
         } catch (e: ActivityNotFoundException) {
             println("Ne postoji aplikacija za navedenu akciju")
         }
+    }
+
+    fun getActorsList(): List<String> {
+        return movie.actors
+    }
+
+    fun getSimilarMoviesList(): List<String> {
+        return movie.similarMovies
     }
 }
