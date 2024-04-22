@@ -126,8 +126,7 @@ class MovieDetailActivity : AppCompatActivity() {
     }
 
     fun searchDone(movie: Movie){
-        thisMovie.genre = movie.genre
-        thisMovie.homepage = movie.homepage
+        thisMovie = Movie(thisMovie.id, thisMovie.title, thisMovie.overview, thisMovie.releaseDate, movie.homepage, movie.genre, thisMovie.posterPath)
         populateDetails()
     }
 
