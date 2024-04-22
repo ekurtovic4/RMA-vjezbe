@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.widget.AppCompatImageButton
@@ -12,7 +11,6 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import ba.unsa.etf.rma.cineaste.R
-import ba.unsa.etf.rma.cineaste.adapters_etc.MovieListAdapter
 import ba.unsa.etf.rma.cineaste.adapters_etc.SearchMoviesAdapter
 import ba.unsa.etf.rma.cineaste.data.Movie
 import ba.unsa.etf.rma.cineaste.web.MovieRepository
