@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/detail_navgraph"
+    app:startDestination="@id/actorsFragment">
+
+    <fragment
+        android:id="@+id/actorsFragment"
+        android:name="ba.unsa.etf.rma.cineaste.fragments.ActorsFragment"
+        android:label="ActorsFragment">
+        <argument
+            android:name="yourArgument"
+            app:argType="string[]" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/similarMoviesFragment"
+        android:name="ba.unsa.etf.rma.cineaste.fragments.SimilarMoviesFragment"
+        android:label="SimilarMoviesFragment">
+        <argument
+            android:name="yourArgument"
+            app:argType="string[]" />
+    </fragment>
+
+</navigation>
