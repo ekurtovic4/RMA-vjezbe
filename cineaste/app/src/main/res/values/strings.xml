@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">cineaste</string>
+    <string name="search">Search</string>
+    <string name="favorite">Favorite movies</string>
+    <string name="recent">Upcoming movies</string>
+    <string name="add_to_favorites">ADD TO FAVORITES</string>
+    <string name="delete_from_favorites">DELETE FROM FAVORITES</string>
+</resources>
